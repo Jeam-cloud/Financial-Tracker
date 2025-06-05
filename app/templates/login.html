@@ -3,23 +3,32 @@
 {% block content %}
 
 {{ form.hidden_tag() }}
-    {{ form.username.label }}
-    {{ form.username(size=50)}}
 
-    {% for error in form.username.errors %}
-        {{ error }}
-    {% endfor %}
+    <div>
+        {{ form.username.label }}
+        {{ form.username(size=50)}}
 
-    {{ form.password.label }}
-    {{ form.password(size=50) }}
+        {% for error in form.username.errors %}
+            {{ error }}
+        {% endfor %}
+    </div>
 
-    {% for error in form.password.errors %}
-        {{ error }}
-    {% endfor %}
+    <div>
+        {{ form.password.label }}
+        {{ form.password(size=50) }}
 
-    {{ form.remember_me() }}
-    {{ form.remember_me.label }}
+        {% for error in form.password.errors %}
+            {{ error }}
+        {% endfor %}
+    </div>
 
-    {{ form.submit() }}
+    <div>
+        {{ form.remember_me() }}
+        {{ form.remember_me.label }}
+    </div>
+    
+    <div>
+        {{ form.submit() }}
+    </div>
 
 {% endblock %}
