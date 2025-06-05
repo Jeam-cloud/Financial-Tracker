@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {{ sform.hidden_tag() }}
+        {{ sform.username.label }}
+        {{ sform.username(size=50) }}
+
+        {% for error in sform.username.errors %}
+            {{ error }}
+        {% endfor %}
+
+
+        {{ sform.password.label }}
+        {{ sform.password(size=50) }}
+
+        {% for error in sform.password.errors %}
+            {{ error }}
+        {% endfor %}
+
+        {{ sform.confirm_password.label }}
+        {{ sform.confirm_password(size=50) }}
+
+        {{ sform.submit() }}
+{% endblock %}

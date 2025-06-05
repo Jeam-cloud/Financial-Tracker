@@ -1,0 +1,5 @@
+flask
+flask-login
+flask-SQLAlchemy
+flask-wtf
+pandas

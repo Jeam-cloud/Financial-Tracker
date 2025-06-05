@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{{ form.hidden_tag() }}
+    {{ form.username.label }}
+    {{ form.username(size=50)}}
+
+    {% for error in form.username.errors %}
+        {{ error }}
+    {% endfor %}
+
+    {{ form.password.label }}
+    {{ form.password(size=50) }}
+
+    {% for error in form.password.errors %}
+        {{ error }}
+    {% endfor %}
+
+    {{ form.remember_me() }}
+    {{ form.remember_me.label }}
+
+    {{ form.submit() }}
+
+{% endblock %}
