@@ -2,33 +2,35 @@
 
 {% block content %}
 
-{{ form.hidden_tag() }}
+<form action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
 
-    <div>
-        {{ form.username.label }}
-        {{ form.username(size=50)}}
+        <div>
+            {{ form.username.label }}
+            {{ form.username(size=50)}}
 
-        {% for error in form.username.errors %}
-            {{ error }}
-        {% endfor %}
-    </div>
+            {% for error in form.username.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
 
-    <div>
-        {{ form.password.label }}
-        {{ form.password(size=50) }}
+        <div>
+            {{ form.password.label }}
+            {{ form.password(size=50) }}
 
-        {% for error in form.password.errors %}
-            {{ error }}
-        {% endfor %}
-    </div>
+            {% for error in form.password.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
 
-    <div>
-        {{ form.remember_me() }}
-        {{ form.remember_me.label }}
-    </div>
-    
-    <div>
-        {{ form.submit() }}
-    </div>
+        <div>
+            {{ form.remember_me() }}
+            {{ form.remember_me.label }}
+        </div>
+
+        <div>
+            {{ form.submit() }}
+        </div>
+</form>
 
 {% endblock %}

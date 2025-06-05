@@ -16,7 +16,7 @@ def login():
 
     if form.validate_on_submit():
         flash("user has logged in")
-        return redirect(url_for('index'))
+        return redirect(url_for("index"))
     return render_template("login.html", title="Login", form=form)
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -25,5 +25,5 @@ def signup():
 
     if sform.validate_on_submit():
         flash("user has been added to the database")
-        return redirect(url_for('login'))
+        return redirect(url_for("login"))
     return render_template("signup.html", title="Sign-up", sform=sform)
