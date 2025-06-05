@@ -3,10 +3,12 @@ from flask import render_template, flash, url_for, redirect
 from app.forms import LoginForm, SignupForm
 from app.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user, logout_user, login_required
 
 @app.route("/")
 
 @app.route("/index", methods=["GET", "POST"])
+@login_required
 def index():
     word = 'hello, world'
 
@@ -20,7 +22,7 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         
         if user and check_password_hash(user.password_hashed, form.password.data):
-
+            login_user(user)
             flash("user has logged in")
             return redirect(url_for("index"))
         else:
@@ -50,3 +52,8 @@ def signup():
             flash("user has been added to the database")
             return redirect(url_for("login"))
     return render_template("signup.html", title="Sign-up", sform=sform)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("login"))

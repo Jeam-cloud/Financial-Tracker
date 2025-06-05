@@ -8,6 +8,8 @@ app.config['SECRET_KEY'] = '2NbF7oNgA57XNgiZ6NOcpN62PjlQWMbj'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///finance.db'
 
 db = SQLAlchemy(app)
+login = LoginManager(app)
 
+login.login_view = "login"
 
 from app import routes
