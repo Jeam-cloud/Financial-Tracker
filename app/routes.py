@@ -1,18 +1,24 @@
 from app import app, db
 from flask import render_template, flash, url_for, redirect
-from app.forms import LoginForm, SignupForm
+from app.forms import LoginForm, SignupForm, UploadForm
 from app.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
+import pandas as pd
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 
 @app.route("/index", methods=["GET", "POST"])
 @login_required
 def index():
-    word = 'hello, world'
+    form = UploadForm()
+    dataframe = None
 
-    return render_template("index.html", word=word, title="Home")
+    if form.validate_on_submit():
+        dataframe = pd.read_csv(form.file.data).to_html()
+        return render_template("index.html", dataframe=dataframe, form=form, title="Home")
+
+    return render_template("index.html", dataframe=dataframe, form=form, title="Home")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
