@@ -4,10 +4,13 @@
     <form action="" method="POST"enctype="multipart/form-data">
         {{ form.hidden_tag() }}
             {{ form.file() }}
-            {{ form.submit( )}}
-
+            {{ form.submit() }}
     </form>
     {% if dataframe %}
-        {{ dataframe|safe}}
+        {{ dataframe|safe }}
     {% endif %}
+
+    <form action="/add_csv" method="POST">
+        <button type="submit">Save</button>
+    </form>
 {% endblock %}

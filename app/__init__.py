@@ -7,6 +7,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '2NbF7oNgA57XNgiZ6NOcpN62PjlQWMbj'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///finance.db'
 
+app.config['UPLOAD_FOLDER'] = 'app/uploads'
+
 db = SQLAlchemy(app)
 login = LoginManager(app)
 

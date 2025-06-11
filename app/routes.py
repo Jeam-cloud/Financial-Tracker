@@ -1,10 +1,13 @@
 from app import app, db
 from flask import render_template, flash, url_for, redirect
 from app.forms import LoginForm, SignupForm, UploadForm
-from app.models import User
+from app.models import User, Statement
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 import pandas as pd
+from werkzeug.utils import secure_filename
+import os
+
 
 @app.route("/", methods=["GET", "POST"])
 
@@ -13,12 +16,23 @@ import pandas as pd
 def index():
     form = UploadForm()
     dataframe = None
-
     if form.validate_on_submit():
-        dataframe = pd.read_csv(form.file.data).to_html()
-        return render_template("index.html", dataframe=dataframe, form=form, title="Home")
+        df = pd.read_csv(form.file.data)
+        dataframe = df.to_html()
 
-    return render_template("index.html", dataframe=dataframe, form=form, title="Home")
+        file = form.file.data
+        secured_file = secure_filename(file.filename)
+
+        path = os.path.join(app.config['UPLOAD_FOLDER'], secured_file)
+        file.save(path)
+        return render_template("index.html", dataframe=dataframe, form=form,  title="Home")
+    
+    return render_template("index.html", dataframe=dataframe, form=form,  title="Home")
+
+@app.route("/add_csv", methods=["GET", "POST"])
+def add_csv():
+
+    return redirect(url_for("index"))
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
