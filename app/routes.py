@@ -1,13 +1,12 @@
 from app import app, db
-from flask import render_template, flash, url_for, redirect
+from flask import render_template, flash, url_for, redirect, request
 from app.forms import LoginForm, SignupForm, UploadForm
 from app.models import User, Statement
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 import pandas as pd
 from werkzeug.utils import secure_filename
-import os
-
+import os, glob, datetime
 
 @app.route("/", methods=["GET", "POST"])
 
@@ -15,24 +14,74 @@ import os
 @login_required
 def index():
     form = UploadForm()
-    dataframe = None
-    if form.validate_on_submit():
-        df = pd.read_csv(form.file.data)
-        dataframe = df.to_html()
+    df = None
 
+    if form.validate_on_submit():
         file = form.file.data
         secured_file = secure_filename(file.filename)
 
-        path = os.path.join(app.config['UPLOAD_FOLDER'], secured_file)
+        path = os.path.join(app.config["UPLOAD_FOLDER"], secured_file)
         file.save(path)
-        return render_template("index.html", dataframe=dataframe, form=form,  title="Home")
+
+        df = pd.read_csv(path).to_html()
+
+    query = Statement.query.filter_by(user_id=current_user.id)
+
+    selected_type = request.args.get("type", "All")
+
+    if selected_type != "All":
+        query = query.filter_by(account_type=selected_type)
     
-    return render_template("index.html", dataframe=dataframe, form=form,  title="Home")
+    sort_type =request.args.get("sort")
+
+    if sort_type == "highest":
+        query = query.order_by(Statement.amount.desc())
+    elif sort_type == "lowest":
+        query = query.order_by(Statement.amount)
+
+    rows = query.all()
+
+    income, expenses = 0, 0
+    for row in rows:
+        if row.amount > 0:
+            income += row.amount
+        elif row.amount < 0:
+            expenses += row.amount
+    
+    return render_template("index.html", title="Home", form=form, df=df, rows=rows, income=income, expenses=expenses)
 
 @app.route("/add_csv", methods=["GET", "POST"])
+@login_required
 def add_csv():
+    files = glob.glob(os.path.join(app.config["UPLOAD_FOLDER"], "*"))
 
+    if files:
+        latest_file = max(files, key=os.path.getmtime)
+        flash("file found")
+
+        df = pd.read_csv(latest_file, index_col=False)
+
+        try:
+            for _, row in df.iterrows():
+                date = list(map(int, row["Transaction Date"].split("/")))
+
+                rows = Statement(
+                    account_type = row["Account Type"],
+                    transaction_date = datetime.datetime(date[2], date[0], date[1]),
+                    description_one = row["Description 1"],
+                    description_two = row["Description 2"],
+                    amount = row["CAD$"],
+                    user_id = current_user.id
+                )
+                db.session.add(rows)
+        except:
+            flash("not an RBC CSV file")
+    
+        db.session.commit()
     return redirect(url_for("index"))
+
+
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

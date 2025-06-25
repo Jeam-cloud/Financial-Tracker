@@ -1,16 +1,61 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form action="" method="POST"enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-            {{ form.file() }}
-            {{ form.submit() }}
-    </form>
-    {% if dataframe %}
-        {{ dataframe|safe }}
-    {% endif %}
 
-    <form action="/add_csv" method="POST">
-        <button type="submit">Save</button>
-    </form>
+<form action="" method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+        {{ form.file() }}
+        {{ form.submit() }}
+</form>
+
+{% if df %}
+    {{ df|safe }}
+{% endif %}
+
+
+<form action="/add_csv" method="POST">
+    <button type="submit">save</button>
+</form>
+
+<table style="border: 1px black solid">
+    <tr>
+        <th>
+            Account Type
+            <div>
+                <a href="{{ url_for('index', type='Chequing') }}">Chequing</a>
+                <a href="{{ url_for('index', type='Savings') }}">Savings</a>
+                <a href="{{ url_for('index', type='All')}}">All</a>
+            </div>
+        </th>
+        <th>Transaction Date</th>
+        <th>Description 1</th>
+        <th>Description 2</th>
+        <th>
+            Amount
+            <div>
+                <a href="{{ url_for('index', sort='highest') }}">Highest Earned</a>
+                <a href="{{ url_for('index', sort='lowest') }}">Highest Spent</a>
+            </div>
+        </th>
+    </tr>
+
+    {% for row in rows %}
+        <tr>
+            <td>{{ row.account_type }}</td>
+            <td>{{ row.transaction_date }}</td>
+            <td>{{ row.description_one }}</td>
+            <td>{{ row.description_two }}</td>
+            <td>{{ row.amount }}</td>
+        </tr>
+    {% endfor %}
+
+    <h1>Summary</h1>
+    <div>
+        <p>income: ${{ "%.2f"|format(income) }}</p>
+        <p>expenses: ${{ "%.2f"|format(expenses|abs) }}</p>
+    </div>
+</table>
+
+
+
 {% endblock %}

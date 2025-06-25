@@ -7,7 +7,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(50))
     password_hashed = db.Column(db.String(200))
     statement = db.relationship('Statement', backref='owner', lazy=True)
-    
+
 
 class Statement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -17,6 +17,7 @@ class Statement(db.Model):
     description_two = db.Column(db.String(200))
     amount = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
+
 
 @login.user_loader
 def load_user(user_id):
