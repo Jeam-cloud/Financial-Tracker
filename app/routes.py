@@ -10,6 +10,10 @@ import os, glob, datetime
 
 @app.route("/", methods=["GET", "POST"])
 
+@app.route("/landing", methods=["GET", "POST"])
+def landing():
+    return render_template("landing.html", title="Home")
+
 @app.route("/index", methods=["GET", "POST"])
 @login_required
 def index():
@@ -76,6 +80,8 @@ def add_csv():
                 db.session.add(rows)
         except:
             flash("not an RBC CSV file")
+        finally:
+            os.remove(latest_file)
     
         db.session.commit()
     return redirect(url_for("index"))

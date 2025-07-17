@@ -1,61 +1,122 @@
 {% extends "base.html" %}
 
+{% block styles %}
+    <link rel="stylesheet" href="/static/index.css">
+{% endblock %}
+
 {% block content %}
 
-<form action="" method="POST" enctype="multipart/form-data">
-    {{ form.hidden_tag() }}
-        {{ form.file() }}
-        {{ form.submit() }}
-</form>
-
-{% if df %}
-    {{ df|safe }}
-{% endif %}
-
-
-<form action="/add_csv" method="POST">
-    <button type="submit">save</button>
-</form>
-
-<table style="border: 1px black solid">
-    <tr>
-        <th>
-            Account Type
-            <div>
-                <a href="{{ url_for('index', type='Chequing') }}">Chequing</a>
-                <a href="{{ url_for('index', type='Savings') }}">Savings</a>
-                <a href="{{ url_for('index', type='All')}}">All</a>
-            </div>
-        </th>
-        <th>Transaction Date</th>
-        <th>Description 1</th>
-        <th>Description 2</th>
-        <th>
-            Amount
-            <div>
-                <a href="{{ url_for('index', sort='highest') }}">Highest Earned</a>
-                <a href="{{ url_for('index', sort='lowest') }}">Highest Spent</a>
-            </div>
-        </th>
-    </tr>
-
-    {% for row in rows %}
-        <tr>
-            <td>{{ row.account_type }}</td>
-            <td>{{ row.transaction_date }}</td>
-            <td>{{ row.description_one }}</td>
-            <td>{{ row.description_two }}</td>
-            <td>{{ row.amount }}</td>
-        </tr>
-    {% endfor %}
-
-    <h1>Summary</h1>
-    <div>
-        <p>income: ${{ "%.2f"|format(income) }}</p>
-        <p>expenses: ${{ "%.2f"|format(expenses|abs) }}</p>
+<div id="nav-bar">
+    <div id="nav-left">
+        <img src="/static/images/logo.png" alt="Logo" id="nav-logo">
+        <span id="nav-brand">
+                <span class="brand-main">Royal</span><span class="brand-highlight">View</span>
+        </span>
     </div>
-</table>
+
+    <div id="nav-links">
+        <a href="{{ url_for('index') }}" class="nav-link">Dashboard</a>
+        <a href="{{ url_for('landing') }}" class="nav-link">Home</a>
+        <a href="{{ url_for('signup') }}" class="nav-link">Account</a>
+
+    </div>
+</div>
 
 
+<div class="format">
+    <h1 id="title1">Finance Dashboard</h1>
+    
+    <section id="upload-section">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            
+            <div id="file-container">
+                <div id="file-btn-wrapper">
 
+                    <div class="svg-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+                    </div>
+
+                    <label for="file-upload" class="custom-file-label">Choose File Here <br> <span id="text2">RBC CSV files only.</span> </label>
+                    {{ form.file(class="file-btn", id="file-upload") }}
+                </div>
+
+                <div id="preview-btn-wrapper">
+                    <label for="preview-file" class="custom-preview-label">Preview Data</label>
+                    {{ form.submit(class="upload-btn", id="preview-file") }}
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <section id="save-section">
+        <form action="/add_csv" method="POST">
+            <button id="save-btn" type="submit">Save to Database</button>
+        </form>
+    </section>
+
+    <hr>
+
+    <section id="preview-section">
+        <h1 class="title2">CSV Preview</h1>
+        {% if df %}
+            <div id="preview-table">
+                {{ df|safe }}
+            </div>
+        {% endif %}
+    </section>
+
+
+    <section id="table-section">
+        <h1 class="title2">Transactions Records</h1>
+
+        <div id="data-table">
+            <table>
+                <tr>
+                    <th>
+                        Account Type
+                        <div>
+                            <a href="{{ url_for('index', type='Chequing') }}">Chequing</a>
+                            <a href="{{ url_for('index', type='Savings') }}">Savings</a>
+                            <a href="{{ url_for('index', type='All')}}">All</a>
+                        </div>
+                    </th>
+                    <th>Transaction Date</th>
+                    <th>Description 1</th>
+                    <th>Description 2</th>
+                    <th>
+                        Amount
+                        <div>
+                            <a href="{{ url_for('index', sort='highest') }}">Highest Earned</a>
+                            <a href="{{ url_for('index', sort='lowest') }}">Highest Spent</a>
+                        </div>
+                    </th>
+                </tr>
+
+                {% for row in rows %}
+                    <tr>
+                        <td>{{ row.account_type }}</td>
+                        <td>{{ row.transaction_date }}</td>
+                        <td>{{ row.description_one }}</td>
+                        <td>{{ row.description_two }}</td>
+                        <td>{{ row.amount }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+    </section>
+
+    <section id="summary-section">
+        <h1>Summary</h1>
+        <div class="summary-cards">
+            <div class="summary-card">
+                <p class="summary-title">Money in</p>
+                <p class="summary-amount">${{ "%.2f"|format(income) }}</p>
+            </div>
+            <div class="summary-card">
+                <p class="summary-title">Money out</p>
+                <p class="summary-amount">${{ "%.2f"|format(expenses|abs) }}</p>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock %}

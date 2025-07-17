@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="static/landing.css">
+{% endblock %}
+
+{% block body_class %}format{% endblock %}
+
+{% block content %}
+
+<div id="landing-page">
+
+<nav id="nav-bar">
+    <div id="nav-left">
+        <img src="/static/images/logo.png" alt="Logo" id="nav-logo">
+        <span id="nav-brand">
+            <span class="brand-main">Royal</span><span class="brand-highlight">View</span>
+        </span>
+    </div>
+
+    <div id="nav-links">
+        <a href="{{ url_for('landing') }}">Home</a>
+        <a href="#features">Features</a>
+        <a href="#demo">Demo</a>
+        <a href="#footer">Community</a>
+    </div>
+
+    <div id="nav-actions">
+        <a href="{{ url_for('signup') }}" class="primary-btn">Create Account</a>
+        <a href="{{ url_for('login')}}" class="secondary-btn">Log In</a>
+    </div>
+</nav>
+
+
+<section id="top">
+    <div id="header-area">
+        <p id="header-text">All your transactions, <br>in one click</p>
+
+    <div id="text-area">
+        <p id="text1">Personal RBC Finance Tracker. See where all your money flows <br> in one place.</p>
+
+        <ul id="text2">
+            <li>Intuitive easy to use UI</li>
+            <li>RBC integrated CSV file viewer</li>
+            <li>User transactions database system</li>
+        </ul>
+    </div>
+
+    <div id="buttons">
+            <a href="{{ url_for('login') }}" id="btn1">Log-in</a>
+            <a href="{{ url_for('signup')}}" id="btn2">Sign-up</a>
+    </div>
+
+    </div>
+
+    <div id="phone">
+        <img src="static/images/phone.png">
+    </div>
+    <div id="pic-area"></div>
+</section>
+
+<section id="features">
+    <p id="features-title">Track your money, anytime, anywhere</p>
+
+    <div id="texts">
+        <div class="cards">
+            <p class="card-title">Organized Viewing Experience</p>
+            <p class="card-content">Enjoy a clear, clutter-free layout where all your transactions are neatly displayed for easy review. Focus on what matters without distractions.</p>
+        </div>
+
+        <div class="cards">
+            <p class="card-title">Effortless CSV Upload</p>
+            <p class="card-content">Drop your RBC bank statement and instantly see it displayed in a clean, organized table — no spreadsheets or manual formatting required.</p>
+        </div>
+
+        <div class="cards">
+            <p class="card-title">Income VS Expense Summary</p>
+            <p class="card-content">Your transactions are automatically categorized as income or expenses, giving you a quick overview of how much you're earning and spending.</p>
+        </div>
+
+        <div class="cards">
+            <p class="card-title">Your Data, Your Control</p>
+            <p class="card-content">Uploaded files are saved locally and never shared. You decide when to save to the database, keeping your financial data secure and personal.</p>
+        </div>
+    </div>
+</section>
+
+<section id="demo">
+    <h1 id="demo-text">Intuitive and Simple UI</h1>
+    <img id="demo-pic" src="/static/images/preview.png">
+    <p id="demo-text2">Designed for ease of access. See all your RBC transactions in one go.</p>
+</section>
+
+<section id="footer">
+    <h1 id="footer-text">Ready to take control of your money?</h1>
+    <p id="footer-text2">Start tracking your cash flow for free</p>
+    <div>
+        <a href="{{ url_for('signup')}}" id="btn3">Join now!</a>
+    </div>
+
+</section>
+
+</div>
+{% endblock %}

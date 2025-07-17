@@ -12,6 +12,6 @@ app.config['UPLOAD_FOLDER'] = 'app/uploads'
 db = SQLAlchemy(app)
 login = LoginManager(app)
 
-login.login_view = "login"
+login.login_view = "landing"
 
 from app import routes

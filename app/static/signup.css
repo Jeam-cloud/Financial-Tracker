@@ -1,0 +1,92 @@
+.format {
+    margin: 0;
+    padding: 0;
+}
+
+#signup-page {
+    background-image: url("/static/images/laptop.jpg");
+    margin: 0;
+    padding: 0;
+    background-size: 70%;
+    overflow: hidden;
+    min-height: 100vh;
+    font-family: "IBM Plex Sans", sans-serif;
+    background-position: right center 100px;
+    background-repeat: no-repeat;
+    display:flex;
+    justify-content: flex-end;
+    font-size: 20px;
+}
+
+#wrapper {
+    background-color: white;
+    width: max(45%, 600px);
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+#title {
+    font-weight: 900px;
+    font-size: 90px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+#flex-signup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    gap: 25px;
+}
+
+.label {
+    background-color: #6C63FE;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 9px 0 0 9px;
+    padding: 10px;
+}
+
+.label svg {
+    fill: white;
+    width: 27px;
+    height: 27px;
+}
+
+.input-field {
+    border: 0;
+    border-radius: 0 9px 9px 0;
+    background-color: #F1F0FF;
+    width: 50%;
+    height: 70px;
+    padding-left: 10px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 20px;
+}
+
+.submit-button {
+    border: none;
+    border-radius: 20px;
+    background-color: #6C63FE;
+    color: white;
+    padding: 7px 80px 7px 80px;
+    font-size: 16px;
+    font-family: "IBM Plex Sans", sans-serif;
+    padding: 12px 85px;
+}
