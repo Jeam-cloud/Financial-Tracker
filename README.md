@@ -2,6 +2,8 @@
 
 A full-stack personal finance tracker designed to help users securely manage and visualize their spending. The app allows uploading of RBC bank statement CSV files, user-specific data storage with authentication, and generates monthly spending summaries for better financial management.
 
+https://github.com/user-attachments/assets/752be2fb-503c-48f9-8317-386a91d66d13
+
 ## Features
 - **User Authentication**: Secure login and signup using Flask-Login, ensuring each user's data is private and separated.
 
