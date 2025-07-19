@@ -34,18 +34,18 @@ pandas
 
 HTML / CSS / JavaScript (Vanilla)
 
-Prerequisites
+## Prerequisites
 `pip install -r requirements.txt`
 Or manually:
 
 `pip install flask Flask-SQLAlchemy flask-login flask-wtf pandas`
 
-Running the App
+## Running the App
 
 `python finance.py`
 
 
-Future Improvements
+## Future Improvements
 - Graphs using Chart.js for interactive browser-based charts.
 
 - Multi-bank CSV support.
