@@ -1,4 +1,4 @@
-# Financial-Tracker
+# RoyalView
 
 A full-stack personal finance tracker designed to help users securely manage and visualize their spending. The app allows uploading of RBC bank statement CSV files, user-specific data storage with authentication, and generates monthly spending summaries for better financial management.
 
